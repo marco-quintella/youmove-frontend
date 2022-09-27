@@ -3,9 +3,7 @@ router-view
 </template>
 
 <script setup lang="ts">
-import { useMutation, useQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
-import { onMounted, ref } from 'vue'
+import { ref } from 'vue'
 import useRouteGuard from './composables/route-guards'
 
 const users = ref()
