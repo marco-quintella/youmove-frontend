@@ -11,13 +11,9 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.9",
     "@quasar/extras": "^1.0.0",
-    "@vue/apollo-composable": "4.0.0-alpha.19",
     "@vue/runtime-core": "^3.2.39",
     "axios": "^0.21.1",
-    "graphql": "^16.6.0",
-    "graphql-tag": "^2.12.6",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",
     "vue": "^3.0.0",
