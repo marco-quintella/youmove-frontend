@@ -21,33 +21,17 @@ q-layout(view="lHh lpr lFf")
                 router-link(to="forgot-password") Forgot Password?
 </template>
 <script setup lang="ts">
-import { useAuthStore } from 'src/stores/auth'
-import type { LoginBody } from '../../types/auth.d'
-import formRules from '../../composables/form-rules'
+import formRules from 'src/composables/form-rules'
+import type { RegisterBody } from 'src/types/auth.d'
 
-const authStore = useAuthStore()
-const router = useRouter()
-
-const model = reactive<LoginBody>({
+const model = reactive<RegisterBody>({
+  name: '',
   email: '',
   password: ''
 })
 const isLoading = ref(false)
 
-const onSubmit = async () => {
-  isLoading.value = true
-  if (model.email || model.password) {
-    await authStore.login(model)
-    router.push('/')
-  }
-  isLoading.value = false
+const onSubmit = () => {
+  // onSubmit
 }
 </script>
-<style lang="sass" scoped>
-.title
-  font-size: 3rem
-  font-weight: 700
-  line-height: 4.5rem
-  color: #292d34
-  text-align: center
-</style>

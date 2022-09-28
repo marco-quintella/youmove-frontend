@@ -1,3 +1,4 @@
+import { User } from 'src/types/user'
 import { LoginResponse, RegisterResponse, RegisterBody, LoginBody, AuthTokens } from 'src/types/auth.d'
 import { api } from 'src/boot/axios'
 
@@ -12,4 +13,5 @@ export default class AuthService {
   static resetPassword = (password: string, token: string) => api.post<void>(`${this.uri}/reset-password`, { password }, { params: { token } })
   static sendVerificationEmail = () => api.post<void>(`${this.uri}/send-verification-email`)
   static verifyEmail = (token: string) => api.post<void>(`${this.uri}/verify-email`, {}, { params: { token } })
+  static getUserByToken = (token: string) => api.post<User>(`${this.uri}/get-user-by-token`, { token })
 }

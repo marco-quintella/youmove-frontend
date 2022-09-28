@@ -12,6 +12,7 @@ const { configure } = require('quasar/wrappers')
 const path = require('path')
 const AutoImport = require('unplugin-auto-import/vite')
 const Components = require('unplugin-vue-components/vite')
+const { fileURLToPath } = require('url')
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -78,6 +79,7 @@ module.exports = configure(function (/* ctx */) {
       // distDir
 
       // extendViteConf (viteConf) {
+      //   viteConf.resolve.alias.src = path.resolve(__dirname, 'src')
       // },
       // viteVuePluginOptions: {},
 

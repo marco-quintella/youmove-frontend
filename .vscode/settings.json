@@ -16,5 +16,8 @@
   "i18n-ally.localesPaths": [
     "src/i18n"
   ],
-  "typescript.format.insertSpaceBeforeFunctionParenthesis": true
+  "typescript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "[sass]": {
+    "editor.defaultFormatter": "syler.sass-indented"
+  }
 }

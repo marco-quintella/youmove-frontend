@@ -8,7 +8,7 @@ export default function useRouteGuard () {
     if (to.matched.some(record => record.meta.public)) {
       next()
     } else {
-      authStore.loggedIn ? next() : next('/login')
+      authStore.isAuthenticated ? next() : next('/login')
     }
   })
 }

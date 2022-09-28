@@ -1,5 +1,7 @@
 import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance } from 'axios'
+import { LocalStorage } from 'quasar'
+import router from 'src/router'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -15,14 +17,18 @@ declare module '@vue/runtime-core' {
 // for each client)
 const api = axios.create({ baseURL: 'http://localhost:3000/v1/', withCredentials: true })
 
-api.interceptors.response.use(
-  res => res,
-  error => {
-    return Promise.reject(error)
-  }
-)
-
-export default boot(({ app }) => {
+export default boot(({ app, router }) => {
+  api.interceptors.response.use(
+    res => res,
+    error => {
+      if (error.response.status === 401) {
+        LocalStorage.remove('tokens')
+        LocalStorage.remove('user')
+        router.push('/login')
+      }
+      return Promise.reject(error)
+    }
+  )
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios

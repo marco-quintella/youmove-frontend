@@ -22,6 +22,14 @@ const routes: RouteRecordRaw[] = [
       public: true
     }
   },
+  {
+    name: 'register',
+    path: '/register',
+    component: () => import('pages/auth/RegisterPage.vue'),
+    meta: {
+      public: true
+    }
+  },
 
   // Always leave this as last one,
   // but you can also remove it

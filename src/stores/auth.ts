@@ -1,27 +1,37 @@
-import { RegisterBody, LoginBody } from 'src/types/auth.d'
-import { AuthTokens } from './../types/auth.d'
-import { User } from './../types/user.d'
-import { LocalStorage } from 'quasar'
+import type { AuthTokens, LoginBody, RegisterBody } from './../types/auth.d'
+import type { User } from './../types/user.d'
 import { defineStore } from 'pinia'
 import AuthService from 'src/services/auth.service'
 import { tryCatch } from 'src/utils/error-handling'
+import { LocalStorage } from 'quasar'
 
-export const useAuthStore = defineStore<'auth', {
-  isAuthicated: boolean
-  user: User | null
-  tokens: AuthTokens | null
-}>('auth', {
+const localTokens = LocalStorage.getItem('tokens')
+const localUser = LocalStorage.getItem('user')
+
+function saveTokensOnLocalStorage (tokens: AuthTokens) {
+  LocalStorage.set('tokens', tokens)
+}
+
+function saveUserOnLocalStorage (user: User) {
+  LocalStorage.set('user', user)
+}
+
+export const useAuthStore = defineStore('auth', {
   state: () => ({
-    isAuthicated: false,
-    user: null,
-    tokens: null
+    user: ((localUser as User) || null) as User | null,
+    tokens: ((localTokens as AuthTokens) || null) as AuthTokens | null
   }),
+  getters: {
+    isAuthenticated: (state) => !!state.user && !!state.tokens
+  },
   actions: {
     async register (user: RegisterBody) {
       tryCatch(async () => {
         const { data } = await AuthService.register(user)
         this.user = data.user
         this.tokens = data.tokens
+        saveTokensOnLocalStorage(data.tokens)
+        saveUserOnLocalStorage(data.user)
       })
     },
     async login (user: LoginBody) {
@@ -29,6 +39,8 @@ export const useAuthStore = defineStore<'auth', {
         const { data } = await AuthService.login(user)
         this.user = data.user
         this.tokens = data.tokens
+        saveTokensOnLocalStorage(data.tokens)
+        saveUserOnLocalStorage(data.user)
       })
     },
     async logout () {
@@ -37,6 +49,8 @@ export const useAuthStore = defineStore<'auth', {
         await AuthService.logout(this.tokens.refresh.token)
         this.user = null
         this.tokens = null
+        LocalStorage.remove('tokens')
+        LocalStorage.remove('user')
       })
     },
     async refreshTokens () {
@@ -44,6 +58,7 @@ export const useAuthStore = defineStore<'auth', {
         if (!this.tokens || !this.tokens.refresh || !this.tokens.refresh.token) return
         const { data } = await AuthService.refreshTokens(this.tokens.refresh.token)
         this.tokens = data
+        saveTokensOnLocalStorage(data)
       })
     },
     async forgotPassword (email: string) {
