@@ -12,7 +12,6 @@ const { configure } = require('quasar/wrappers')
 const path = require('path')
 const AutoImport = require('unplugin-auto-import/vite')
 const Components = require('unplugin-vue-components/vite')
-const { fileURLToPath } = require('url')
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -141,7 +140,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: []
+      plugins: ['Loading', 'Notify', 'Dialog', 'LocalStorage']
     },
 
     // animations: 'all', // --- includes all animations
