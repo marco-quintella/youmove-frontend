@@ -3,10 +3,19 @@ import type { User } from './../types/user.d'
 import { defineStore } from 'pinia'
 import AuthService from 'src/services/auth.service'
 import { tryCatch } from 'src/utils/error-handling'
-import { LocalStorage } from 'quasar'
+import { Loading, LocalStorage } from 'quasar'
+import isAfter from 'date-fns/isAfter'
 
-const localTokens = LocalStorage.getItem('tokens')
-const localUser = LocalStorage.getItem('user')
+Loading.show()
+let localTokens = LocalStorage.getItem('tokens') as AuthTokens | undefined
+let localUser = LocalStorage.getItem('user') as User | undefined
+if (!!localTokens && localTokens.access && localTokens.access.expires) {
+  if (isAfter(new Date(), new Date(localTokens.access.expires))) {
+    localTokens = undefined
+    localUser = undefined
+  }
+}
+Loading.hide()
 
 function saveTokensOnLocalStorage (tokens: AuthTokens) {
   LocalStorage.set('tokens', tokens)
