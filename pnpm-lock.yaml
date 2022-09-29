@@ -11,6 +11,7 @@ specifiers:
   '@vue/runtime-core': ^3.2.39
   autoprefixer: ^10.4.2
   axios: ^0.21.1
+  date-fns: ^2.29.3
   eslint: ^8.10.0
   eslint-config-standard: ^17.0.0-1
   eslint-plugin-import: ^2.19.1
@@ -32,6 +33,7 @@ dependencies:
   '@quasar/extras': 1.15.3
   '@vue/runtime-core': 3.2.39
   axios: 0.21.4
+  date-fns: 2.29.3
   pinia: 2.0.22_arz4dztosvwy2ghjrlh2wdhejm
   quasar: 2.8.4
   vue: 3.2.39
@@ -1634,6 +1636,11 @@ packages:
 
   /csstype/2.6.21:
     resolution: {integrity: sha512-Z1PhmomIfypOpoMjRQB70jfvy/wxT50qW08YXO5lMIJkrdq4yOTR+AW7FqutScmB9NkLwxo+jU+kZLbofZZq/w==}
+
+  /date-fns/2.29.3:
+    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+    engines: {node: '>=0.11'}
+    dev: false
 
   /debug/2.6.9:
     resolution: {integrity: sha512-bC7ElrdJaJnPbAP+1EotYvqZsb3ecl5wi6Bfi6BJTUcNowp6cvspg0jXznRTKDjm/E7AdgFBVeAPVMNcKGsHMA==}
