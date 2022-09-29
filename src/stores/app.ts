@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useStore = defineStore('app', {
   state: () => ({
     globalLoading: false,
-    isDrawerOpen: true
+    isDrawerOpen: false
   }),
   actions: {
     setGlobalLoading (value: boolean) {
