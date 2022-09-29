@@ -58,7 +58,7 @@ import { useStore } from 'src/stores/app'
 import { useAuthStore } from 'src/stores/auth'
 const store = useStore()
 const authStore = useAuthStore()
-const $q = useQuasar()
+const quasar = useQuasar()
 const router = useRouter()
 const isDrawerOpen = computed(() => store.isDrawerOpen)
 
@@ -69,11 +69,18 @@ const toggleDrawer = () => {
 const searchText = ref('')
 
 const onLogout = async () => {
-  $q.loading.show()
-  await authStore.logout()
-  await router.push('/login')
-  $q.loading.hide()
+  quasar.loading.show()
+  setTimeout(async () => {
+    await authStore.logout()
+    quasar.loading.hide()
+  }, 1000)
 }
+
+watchEffect(() => {
+  if (!authStore.user && !authStore.tokens) {
+    router.push('/login')
+  }
+})
 </script>
 <style lang="sass">
 .drawer
