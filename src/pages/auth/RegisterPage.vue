@@ -31,8 +31,6 @@ const authStore = useAuthStore()
 const router = useRouter()
 const quasar = useQuasar()
 
-const currentUser = computed(() => authStore.user)
-
 const model = reactive<RegisterBody>({
   name: '',
   email: '',
@@ -41,13 +39,19 @@ const model = reactive<RegisterBody>({
 
 const onSubmit = async () => {
   quasar.loading.show()
-  await authStore.register(model)
-  // console.log(user)
-  if (currentUser.value) {
+  setTimeout(async () => {
+    if (model.email || model.password || model.name) {
+      await authStore.register(model)
+    }
+    quasar.loading.hide()
+  }, 1000)
+}
+
+watchEffect(() => {
+  if (authStore.user && authStore.tokens) {
     router.push('/')
   }
-  quasar.loading.hide()
-}
+})
 </script>
 <style lang="sass" scoped>
 .register-card
