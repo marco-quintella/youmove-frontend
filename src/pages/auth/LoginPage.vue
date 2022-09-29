@@ -1,53 +1,54 @@
 <template lang="pug">
-q-layout(view="lHh lpr lFf")
+q-layout(view="lHh lpr lFf" style="background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);")
   q-page-container
-    q-page
-      .row.column.fit
-        nav.row.justify-between
-          .col-auto LOGO
+    q-page.column
+      nav.col-auto
+        .row.justify-between.items-center
+          .col-auto.q-pl-xl
+            img.small-logo(src="~assets/logo-trimmy.png")
           .col-auto
             .row.q-pa-xl.items-center
-              .col-auto.q-pr-lg Don't have an account?
+              .col-auto.q-pr-lg.gt-sm.text-weight-medium Don't have an account?
               .col-auto
-                q-btn(to='/register') Register
-        .row.justify-center.items-center
-          q-card.row.q-px-xl.q-py-lg
-            q-form.col(@submit.prevent="onSubmit")
-              .row.column()
-                h1(class="title") Welcome Back!
-                q-input(outlined label="Email" v-model="model.email" :rules="[formRules.required('Email is required')]" autocomplete="email")
-                q-input(outlined label="Password" type="password" v-model="model.password" :rules="[formRules.required('Password is required')]" autocomplete="current-password")
-                q-btn.q-mb-md(type="submit" :loading="isLoading") Login
-                router-link(to="forgot-password") Forgot Password?
+                q-btn(to='/register' color="secondary") Register
+      .col.row.justify-center.items-center
+        .col-12.col-sm-9.col-md-6.col-lg-4.q-px-md
+          q-card.q-px-xl.q-py-md
+            q-form.column.q-gutter-sm(@submit.prevent="onSubmit")
+              h1(class="text-center") Welcome Back!
+              q-input(outlined label="Email" v-model="model.email" :rules="[formRules.required('Email is required')]" autocomplete="email" dense)
+              q-input(outlined label="Password" type="password" v-model="model.password" :rules="[formRules.required('Password is required')]" autocomplete="current-password" dense)
+              q-btn.q-mb-md(color="primary" type="submit" no-caps style="font-size: 1rem;") Login
+              router-link(to="forgot-password") Forgot Password?
 </template>
 <script setup lang="ts">
 import { useAuthStore } from 'src/stores/auth'
 import type { LoginBody } from '../../types/auth.d'
 import formRules from '../../composables/form-rules'
+import { useQuasar } from 'quasar'
 
 const authStore = useAuthStore()
 const router = useRouter()
+const quasar = useQuasar()
 
 const model = reactive<LoginBody>({
   email: '',
   password: ''
 })
-const isLoading = ref(false)
 
 const onSubmit = async () => {
-  isLoading.value = true
-  if (model.email || model.password) {
-    await authStore.login(model)
+  quasar.loading.show()
+  setTimeout(async () => {
+    if (model.email || model.password) {
+      await authStore.login(model)
+    }
+    quasar.loading.hide()
+  }, 1000)
+}
+
+watchEffect(() => {
+  if (authStore.user && authStore.tokens) {
     router.push('/')
   }
-  isLoading.value = false
-}
+})
 </script>
-<style lang="sass" scoped>
-.title
-  font-size: 3rem
-  font-weight: 700
-  line-height: 4.5rem
-  color: #292d34
-  text-align: center
-</style>
