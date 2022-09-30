@@ -1,5 +1,7 @@
-export interface User {
-  _id?: string
+import { PaginatedResponse } from './common.d'
+import { PaginatedQuery } from './common'
+
+export interface User extends Document {
   email?: string
   name?: string
   password?: string
@@ -7,32 +9,9 @@ export interface User {
   isEmailVerified?: boolean
 }
 
-export interface GetUsersQuery {
-  name?: string
-  role?: string
-  sortBy?: string
-  limit?: number
-  page?: number
-}
-
-export interface GetUsersResponse {
-  results: User[]
-  page: number
-  limit: number
-  totalPages: number
-  totalResults: number
-}
+export interface GetUsersQuery extends User, PaginatedQuery { }
+export type GetUsersResponse = PaginatedResponse<User>
 
 export interface UpdateUserParams {
-  userId: string
-}
-
-export interface UpdateUserBody {
-  email?: string
-  password?: string
-  name?: string
-}
-
-export interface DeleteUserParams {
   userId: string
 }
