@@ -42,14 +42,15 @@ const onSubmit = async () => {
   setTimeout(async () => {
     if (model.email || model.password || model.name) {
       await authStore.register(model)
+        .catch(() => quasar.loading.hide())
     }
-    quasar.loading.hide()
   }, 1000)
 }
 
-watchEffect(() => {
+watchEffect(async () => {
   if (authStore.user && authStore.tokens) {
-    router.push('/')
+    await router.push('/')
+    quasar.loading.hide()
   }
 })
 </script>

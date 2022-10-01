@@ -22,6 +22,11 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
       q-item-section Home
     q-item(clickable)
       q-item-section Notifications
+    q-separator
+    q-item
+      q-item-section Teams
+    q-item
+      clickable-item-section(@click="onClickNewTeam") Create a New Team
   .col-auto
     .q-px-md.row.items-center(style="height: 50px")
       .col-auto
@@ -56,6 +61,9 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
 import { useQuasar } from 'quasar'
 import { useStore } from 'src/stores/app'
 import { useAuthStore } from 'src/stores/auth'
+
+import CreateTeamDialog from '../teams/CreateTeamDialog.vue'
+
 const store = useStore()
 const authStore = useAuthStore()
 const quasar = useQuasar()
@@ -74,6 +82,12 @@ const onLogout = async () => {
     await authStore.logout()
     quasar.loading.hide()
   }, 1000)
+}
+
+const onClickNewTeam = () => {
+  quasar.dialog({
+    component: CreateTeamDialog
+  })
 }
 
 watchEffect(() => {
