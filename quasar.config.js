@@ -12,7 +12,6 @@ const { configure } = require('quasar/wrappers')
 const path = require('path')
 const AutoImport = require('unplugin-auto-import/vite')
 const Components = require('unplugin-vue-components/vite')
-const Vue = require('@vitejs/plugin-vue')
 
 module.exports = configure(function (/* ctx */) {
   return {
@@ -84,10 +83,6 @@ module.exports = configure(function (/* ctx */) {
       // viteVuePluginOptions: {},
 
       vitePlugins: [
-        Vue({
-          include: [/\.vue$/, /\.md$/, /\.pug$/],
-          reactivityTransform: true
-        }),
         ['@intlify/vite-plugin-vue-i18n', {
           // if you want to use Vue I18n Legacy API, you need to set `compositionOnly: false`
           // compositionOnly: false,
@@ -98,15 +93,28 @@ module.exports = configure(function (/* ctx */) {
         AutoImport({
           imports: [
             'vue',
+            'vue/macros',
             'vue-router',
-            'vue-i18n'
+            'vue-i18n',
+            '@vueuse/head',
+            '@vueuse/core'
           ],
           dts: 'src/auto-imports.d.ts',
+          dirs: [
+            'src/composables',
+            'src/store',
+            'src/services',
+            'src/boot',
+            'src/utils'
+          ],
           eslintrc: {
             enabled: true
-          }
+          },
+          vueTemplate: true
         }),
         Components({
+          extensions: ['vue', 'md'],
+          include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
           dts: 'src/components.d.ts'
         })
       ]
