@@ -2,6 +2,7 @@ import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance } from 'axios'
 import { LocalStorage } from 'quasar'
 import router from 'src/router'
+import { AuthTokens } from '../types/auth'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -29,6 +30,20 @@ export default boot(({ app, router }) => {
       return Promise.reject(error)
     }
   )
+
+  api.interceptors.request.use(
+    config => {
+      const tokens = LocalStorage.getItem('tokens') as AuthTokens
+      if (tokens && tokens.access) {
+        config.headers.Authorization = `Bearer ${tokens.access.token}`
+      }
+      return config
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
+
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios
