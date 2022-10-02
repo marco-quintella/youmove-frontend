@@ -27,18 +27,18 @@ function saveUserOnLocalStorage (user: User) {
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
-    user: ((localUser as User) || null) as User | null,
-    tokens: ((localTokens as AuthTokens) || null) as AuthTokens | null
   }),
   getters: {
-    isAuthenticated: (state) => !!state.user && !!state.tokens
+    isAuthenticated () {
+      return !!this.user && !!this.tokens
+    },
+    tokens: () => LocalStorage.getItem('tokens') as AuthTokens | undefined,
+    user: () => LocalStorage.getItem('user') as User | undefined
   },
   actions: {
     async register (user: RegisterBody) {
       tryCatch(async () => {
         const { data } = await AuthService.register(user)
-        this.user = data.user
-        this.tokens = data.tokens
         saveTokensOnLocalStorage(data.tokens)
         saveUserOnLocalStorage(data.user)
       })
@@ -46,8 +46,6 @@ export const useAuthStore = defineStore('auth', {
     async login (user: LoginBody) {
       tryCatch(async () => {
         const { data } = await AuthService.login(user)
-        this.user = data.user
-        this.tokens = data.tokens
         saveTokensOnLocalStorage(data.tokens)
         saveUserOnLocalStorage(data.user)
       })
@@ -56,8 +54,6 @@ export const useAuthStore = defineStore('auth', {
       tryCatch(async () => {
         if (!this.tokens || !this.tokens.refresh || !this.tokens.refresh.token) return
         await AuthService.logout(this.tokens.refresh.token)
-        this.user = null
-        this.tokens = null
         LocalStorage.remove('tokens')
         LocalStorage.remove('user')
       })
@@ -66,7 +62,6 @@ export const useAuthStore = defineStore('auth', {
       tryCatch(async () => {
         if (!this.tokens || !this.tokens.refresh || !this.tokens.refresh.token) return
         const { data } = await AuthService.refreshTokens(this.tokens.refresh.token)
-        this.tokens = data
         saveTokensOnLocalStorage(data)
       })
     },

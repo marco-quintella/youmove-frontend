@@ -1,7 +1,6 @@
 import { boot } from 'quasar/wrappers'
 import axios, { AxiosInstance } from 'axios'
 import { LocalStorage } from 'quasar'
-import router from 'src/router'
 import { AuthTokens } from '../types/auth'
 
 declare module '@vue/runtime-core' {
@@ -21,21 +20,22 @@ const api = axios.create({ baseURL: 'http://localhost:3000/v1/', withCredentials
 export default boot(({ app, router }) => {
   api.interceptors.response.use(
     res => res,
-    error => {
-      if (error.response.status === 401) {
-        LocalStorage.remove('tokens')
-        LocalStorage.remove('user')
-        router.push('/login')
+    async error => {
+      const accessToken = LocalStorage.getItem('tokens') as AuthTokens
+      if (error.response.status === 401 && accessToken && accessToken.refresh) {
+        const response = await authService.refreshTokens(accessToken.refresh.token)
+        LocalStorage.set('tokens', response.data)
+        return response
       }
       return Promise.reject(error)
     }
   )
 
   api.interceptors.request.use(
-    config => {
+    async config => {
       const tokens = LocalStorage.getItem('tokens') as AuthTokens
-      if (tokens && tokens.access) {
-        config.headers.Authorization = `Bearer ${tokens.access.token}`
+      if (tokens && tokens.access && tokens.refresh) {
+        if (tokens && tokens.access) config.headers.Authorization = `Bearer ${tokens.access.token}`
       }
       return config
     },
