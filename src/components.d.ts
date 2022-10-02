@@ -15,9 +15,10 @@ declare module '@vue/runtime-core' {
     DrawerUserMenu: typeof import('./components/Layout/DrawerUserMenu.vue')['default']
     EssentialLink: typeof import('./components/EssentialLink.vue')['default']
     ExampleComponent: typeof import('./components/ExampleComponent.vue')['default']
-    MainDrawer: typeof import('./components/Layout/MainDrawer.vue')['default']
+    MainDrawer: typeof import('./components/Layout/MainDrawer/MainDrawer.vue')['default']
     MainToolbar: typeof import('./components/Layout/MainToolbar.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TeamsExpansionItem: typeof import('./components/Layout/MainDrawer/TeamsExpansionItem.vue')['default']
   }
 }

@@ -12,11 +12,14 @@ q-dialog(ref="dialogRef" @hide="onDialogHide" persistent)
 </template>
 <script setup lang="ts">
 import { useDialogPluginComponent, useQuasar } from 'quasar'
+import { useAppStore } from '../../stores/app'
 
 defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogCancel, onDialogHide, onDialogOK } = useDialogPluginComponent()
 const quasar = useQuasar()
+const appStore = useAppStore()
+
 const model = reactive({
   name: ''
 })
@@ -24,6 +27,7 @@ const model = reactive({
 const onSubmit = async () => {
   quasar.loading.show()
   await teamService.createTeam({ name: model.name })
+  await appStore.getUserTeams()
   quasar.loading.hide()
   onDialogOK()
 }

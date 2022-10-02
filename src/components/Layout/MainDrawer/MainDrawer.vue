@@ -17,17 +17,12 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
         .col.text-left.q-ml-sm(style="opacity: 0.4") Search
         .col-auto.q-mr-sm Ctrl + K
   q-separator
-  q-list.col(dense)
+  q-list.col(dense separator)
     q-item(clickable)
       q-item-section Home
     q-item(clickable)
       q-item-section Notifications
-    q-separator
-    q-item
-      q-item-section Teams
-    q-item
-      clickable-item-section(@click="onClickNewTeam") Create a New Team
-    q-separator.q-mt-sm
+    teams-expansion-item
     q-item
       q-item-section Projects
     q-item
@@ -40,9 +35,7 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
 <script setup lang="ts">
 import { useAppStore } from 'src/stores/app'
 import { useQuasar } from 'quasar'
-
-import CreateTeamDialog from '../teams/CreateTeamDialog.vue'
-import CreateProjectDialog from '../projects/CreateProjectDialog.vue'
+import CreateProjectDialogVue from '../../projects/CreateProjectDialog.vue'
 
 const store = useAppStore()
 const isDrawerOpen = computed(() => store.isDrawerOpen)
@@ -52,15 +45,9 @@ const toggleDrawer = () => {
   store.setDrawerOpen(!isDrawerOpen)
 }
 
-const onClickNewTeam = () => {
-  quasar.dialog({
-    component: CreateTeamDialog
-  })
-}
-
 const onClickNewProject = () => {
   quasar.dialog({
-    component: CreateProjectDialog
+    component: CreateProjectDialogVue
   })
 }
 

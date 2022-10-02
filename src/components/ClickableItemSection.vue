@@ -4,6 +4,7 @@ q-item-section.text-center.clickable-item-section
 </template>
 <style lang="sass">
 .clickable-item-section
+  height: 22px
   border-radius: 5px
   cursor: pointer
   background-color: $grey-3
