@@ -1,11 +1,13 @@
 import { defineStore } from 'pinia'
-import type { Team } from '../types/team'
+import ProjectService from '../services/project.service'
+import type { Project, Team } from '../types'
 
 export const useAppStore = defineStore('app', {
   state: () => ({
     globalLoading: false,
     isDrawerOpen: false,
-    teams: [] as Team[]
+    teams: [] as Team[],
+    projects: [] as Project[]
   }),
   actions: {
     setGlobalLoading (value: boolean) {
@@ -24,7 +26,19 @@ export const useAppStore = defineStore('app', {
           result.push(...newTeams.data.results)
         }
       }
-      return result
+      this.teams = result
+    },
+    async getUserProjects () {
+      const { data } = await ProjectService.getProjects()
+      const lastPage = data.totalPages
+      const result = data.results
+      if (lastPage > 1) {
+        for (let i = 2; i <= lastPage; i++) {
+          const newProjects = await ProjectService.getProjects({ page: i })
+          result.push(...newProjects.data.results)
+        }
+      }
+      this.projects = result
     }
   }
 })

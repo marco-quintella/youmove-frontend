@@ -8,6 +8,7 @@ export interface User extends Document {
   role: string
   isEmailVerified: boolean
   initials: string
+  color: string
 }
 
 export interface GetUsersQuery extends User, PaginatedQuery { }

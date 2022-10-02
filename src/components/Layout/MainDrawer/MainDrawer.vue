@@ -23,10 +23,7 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
     q-item(clickable)
       q-item-section Notifications
     teams-expansion-item
-    q-item
-      q-item-section Projects
-    q-item
-      clickable-item-section(@click="onClickNewProject") Create a New Project
+    projects-expansion-item
   .col-auto
     .q-px-md.row.items-center(style="height: 50px")
       .col-auto
@@ -34,21 +31,12 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
 </template>
 <script setup lang="ts">
 import { useAppStore } from 'src/stores/app'
-import { useQuasar } from 'quasar'
-import CreateProjectDialogVue from '../../projects/CreateProjectDialog.vue'
 
 const store = useAppStore()
 const isDrawerOpen = computed(() => store.isDrawerOpen)
-const quasar = useQuasar()
 
 const toggleDrawer = () => {
   store.setDrawerOpen(!isDrawerOpen)
-}
-
-const onClickNewProject = () => {
-  quasar.dialog({
-    component: CreateProjectDialogVue
-  })
 }
 
 const searchText = ref('')

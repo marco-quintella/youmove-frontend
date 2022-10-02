@@ -18,22 +18,33 @@ q-dialog(ref="dialogRef" @hide="onDialogHide" persistent)
 <script setup lang="ts">
 import { useDialogPluginComponent, useQuasar } from 'quasar'
 import CreateTeamDialogVue from '../teams/CreateTeamDialog.vue'
+import { useAppStore } from '../../stores/app'
 
 defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogCancel, onDialogHide, onDialogOK } = useDialogPluginComponent()
 const quasar = useQuasar()
+const appStore = useAppStore()
 
 const model = reactive({
   name: '',
   team: ''
 })
-const teamOptions = reactive<{ label: string, value: string }[]>([])
-
-const noTeams = ref(false)
+const userTeams = computed(() => appStore.teams)
+const teamOptions = computed(() => {
+  const options: { label: string, value: string }[] = []
+  userTeams.value.forEach(team => {
+    options.push({ label: team.name, value: team.id as string })
+  })
+  return options
+})
+const noTeams = computed(() => !userTeams.value || userTeams.value.length === 0)
 
 const onSubmit = async () => {
+  quasar.loading.show()
   await projectService.createProject(model)
+  await appStore.getUserProjects()
+  quasar.loading.hide()
 }
 
 const onCreateTeam = () => {
@@ -42,22 +53,4 @@ const onCreateTeam = () => {
     component: CreateTeamDialogVue
   })
 }
-
-onMounted(async () => {
-  quasar.loading.show()
-  const { data } = await teamService.getTeams()
-  if (!data) {
-    quasar.loading.hide()
-    throw Error('No data returned from getTeams')
-  }
-  if (data.results.length === 0) {
-    noTeams.value = true
-    quasar.loading.hide()
-    return
-  }
-  data.results.forEach(team => {
-    teamOptions.push({ label: team.name, value: team.id as string })
-  })
-  quasar.loading.hide()
-})
 </script>

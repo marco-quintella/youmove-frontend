@@ -2,40 +2,26 @@ import { useQuasar } from 'quasar';
 <template lang="pug">
 q-avatar.cursor-pointer(v-if="currentUser" color="primary" text-color="white" size="30px") {{ currentUser.initials }}
 q-menu(auto-close fit)
-  .row
-    .col-auto
-      .column.q-pa-sm.q-gutter-sm
-        q-avatar(color="primary" text-color="white" size="30px") CO
-        q-avatar(size="30px" style="border: 1px solid #53575e" icon="mdi-plus")
-    q-separator(vertical)
-    .col.q-py-sm
-      q-list(dense)
-        q-item
-          q-item-section(avatar)
-            q-avatar(v-if="currentUser" color="primary" text-color="white" size="30px") {{ currentUser.initials }}
-          q-item-section UserName
-        q-item Configs
-        q-item Notifications
-        q-item Layout
-        q-item Trash
-        q-item Apps
-        q-item Models
-        q-item Rewards
-        q-item(clickable @click="onLogout") Logout
-        q-separator
-        q-item Help
-        q-item Shortcuts
-        q-item Dark Mode
+  q-list(dense)
+    q-item.q-my-sm
+      q-item-section(avatar)
+        q-avatar(v-if="currentUser" color="primary" text-color="white" size="30px") {{ currentUser.initials }}
+      q-item-section UserName
+    q-separator
+    q-item(clickable @click="onLogout") Logout
 </template>
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
 import { useAuthStore } from '../../stores/auth'
+import { useAppStore } from '../../stores/app'
 
 const router = useRouter()
 const quasar = useQuasar()
 const authStore = useAuthStore()
+const appStore = useAppStore()
 
 const currentUser = computed(() => authStore.user)
+const userTeams = computed(() => appStore.teams)
 
 const onLogout = async () => {
   quasar.loading.show()
