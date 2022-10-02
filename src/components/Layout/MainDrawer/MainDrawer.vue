@@ -33,7 +33,10 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
 import { useAppStore } from 'src/stores/app'
 
 const store = useAppStore()
-const isDrawerOpen = computed(() => store.isDrawerOpen)
+const isDrawerOpen = computed({
+  get: () => store.isDrawerOpen,
+  set: (value: boolean) => store.setDrawerOpen(value)
+})
 
 const toggleDrawer = () => {
   store.setDrawerOpen(!isDrawerOpen)
