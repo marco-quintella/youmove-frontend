@@ -27,6 +27,11 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
       q-item-section Teams
     q-item
       clickable-item-section(@click="onClickNewTeam") Create a New Team
+    q-separator.q-mt-sm
+    q-item
+      q-item-section Projects
+    q-item
+      clickable-item-section(@click="onClickNewProject") Create a New Project
   .col-auto
     .q-px-md.row.items-center(style="height: 50px")
       .col-auto
@@ -37,6 +42,7 @@ import { useAppStore } from 'src/stores/app'
 import { useQuasar } from 'quasar'
 
 import CreateTeamDialog from '../teams/CreateTeamDialog.vue'
+import CreateProjectDialog from '../projects/CreateProjectDialog.vue'
 
 const store = useAppStore()
 const isDrawerOpen = computed(() => store.isDrawerOpen)
@@ -49,6 +55,12 @@ const toggleDrawer = () => {
 const onClickNewTeam = () => {
   quasar.dialog({
     component: CreateTeamDialog
+  })
+}
+
+const onClickNewProject = () => {
+  quasar.dialog({
+    component: CreateProjectDialog
   })
 }
 

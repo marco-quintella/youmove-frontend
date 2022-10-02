@@ -68,6 +68,7 @@
     "onUnmounted": true,
     "onUpdated": true,
     "pausableWatch": true,
+    "projectService": true,
     "provide": true,
     "reactify": true,
     "reactifyObject": true,

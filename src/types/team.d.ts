@@ -1,10 +1,12 @@
-import { PaginatedQuery, PaginatedResponse } from './common'
+import { Document, PaginatedQuery, PaginatedResponse } from './common'
 import { User } from './user.d'
 export interface Team extends Document {
   name: string
   members: User[]
   active: boolean
   color: string
+  initials: string
+  owner: User
 }
 
 export type GetTeamsQuery = PaginatedQuery

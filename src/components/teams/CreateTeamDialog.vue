@@ -11,21 +11,20 @@ q-dialog(ref="dialogRef" @hide="onDialogHide" persistent)
           q-btn.full-width(color="primary" label="Save" type="submit")
 </template>
 <script setup lang="ts">
-import { useDialogPluginComponent } from 'quasar'
+import { useDialogPluginComponent, useQuasar } from 'quasar'
 
 defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogCancel, onDialogHide, onDialogOK } = useDialogPluginComponent()
-
+const quasar = useQuasar()
 const model = reactive({
   name: ''
 })
 
-const onOKClick = () => {
-  onDialogOK()
-}
-
 const onSubmit = async () => {
+  quasar.loading.show()
   await teamService.createTeam({ name: model.name })
+  quasar.loading.hide()
+  onDialogOK()
 }
 </script>

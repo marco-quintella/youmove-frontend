@@ -1,4 +1,4 @@
-import { PaginatedResponse } from './common.d'
+import { Document, PaginatedResponse } from './common.d'
 import { PaginatedQuery } from './common'
 
 export interface User extends Document {

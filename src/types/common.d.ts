@@ -4,7 +4,7 @@ export interface Timestamps {
 }
 
 export interface Document extends Timestamps {
-  _id?: string
+  id?: string
 }
 
 export interface PaginatedResponse<T> {
