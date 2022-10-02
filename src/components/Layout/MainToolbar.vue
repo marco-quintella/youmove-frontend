@@ -11,7 +11,7 @@ q-header
     q-separator(vertical inset)
     q-btn Mentions
 </template>
-<script setup lang="ts">import { useStore } from 'src/stores/app'
+<script setup lang="ts">import { useAppStore } from 'src/stores/app'
 
 const mainToolBarTabs = ref('tab1')
 </script>

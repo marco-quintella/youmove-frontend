@@ -26,10 +26,12 @@ import { useAuthStore } from 'src/stores/auth'
 import type { LoginBody } from '../../types/auth.d'
 import formRules from '../../composables/form-rules'
 import { useQuasar } from 'quasar'
+import { useAppStore } from '../../stores/app'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const quasar = useQuasar()
+const appStore = useAppStore()
 
 const model = reactive<LoginBody>({
   email: '',

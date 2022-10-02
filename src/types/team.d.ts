@@ -7,6 +7,6 @@ export interface Team extends Document {
   color: string
 }
 
-export interface GetTeamsQuery extends Team, PaginatedQuery { }
+export type GetTeamsQuery = PaginatedQuery
 export type GetTeamsResponse = PaginatedResponse<Team>
 export type CreateTeamPayload = Partial<Team>

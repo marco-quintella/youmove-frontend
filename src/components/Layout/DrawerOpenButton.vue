@@ -2,8 +2,8 @@
 q-btn(id="drawer-open-button" v-if="!isDrawerOpen" :icon="iconName" @click="toggleDrawer" @mouseenter="hover = true" @mouseleave="hover = false" flat dense)
 </template>
 <script setup lang="ts">
-import { useStore } from 'src/stores/app'
-const store = useStore()
+import { useAppStore } from 'src/stores/app'
+const store = useAppStore()
 const isDrawerOpen = computed(() => store.isDrawerOpen)
 
 const toggleDrawer = () => {

@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 
-export const useStore = defineStore('app', {
+export const useAppStore = defineStore('app', {
   state: () => ({
     globalLoading: false,
     isDrawerOpen: false

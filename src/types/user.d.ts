@@ -2,11 +2,12 @@ import { PaginatedResponse } from './common.d'
 import { PaginatedQuery } from './common'
 
 export interface User extends Document {
-  email?: string
-  name?: string
-  password?: string
-  role?: string
-  isEmailVerified?: boolean
+  email: string
+  name: string
+  password: string
+  role: string
+  isEmailVerified: boolean
+  initials: string
 }
 
 export interface GetUsersQuery extends User, PaginatedQuery { }

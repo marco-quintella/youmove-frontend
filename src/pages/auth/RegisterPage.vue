@@ -8,7 +8,7 @@ q-layout(view="lHh lpr lFf" style="background-image: linear-gradient(to right to
             img.small-logo(src="~assets/logo-trimmy.png")
           .col-auto
             .row.q-pa-xl.items-center
-              .col-auto.q-pr-lg.text-weight-medium Are you alreaedy registered?
+              .col-auto.q-pr-lg.gt-sm.text-weight-medium Are you alreaedy registered?
               .col-auto
                 q-btn(color="secondary" to='/login' no-caps) Login
       .col.row.justify-center.items-center
@@ -26,10 +26,12 @@ import { useQuasar } from 'quasar'
 import formRules from 'src/composables/form-rules'
 import { useAuthStore } from 'src/stores/auth'
 import type { RegisterBody } from 'src/types/auth.d'
+import { useAppStore } from '../../stores/app'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const quasar = useQuasar()
+const appStore = useAppStore()
 
 const model = reactive<RegisterBody>({
   name: '',
@@ -54,12 +56,3 @@ watchEffect(async () => {
   }
 })
 </script>
-<style lang="sass" scoped>
-.register-card
-  width: #{calc(480 / 16)}rem
-  body.screen--xs &
-    width: 95%
-
-  body.screen--sm &
-    width: 95%
-</style>

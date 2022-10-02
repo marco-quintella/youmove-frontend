@@ -11,6 +11,7 @@ declare module '@vue/runtime-core' {
     CreateTeam: typeof import('./components/teams/CreateTeam.vue')['default']
     CreateTeamDialog: typeof import('./components/teams/CreateTeamDialog.vue')['default']
     DrawerOpenButton: typeof import('./components/Layout/DrawerOpenButton.vue')['default']
+    DrawerUserMenu: typeof import('./components/Layout/DrawerUserMenu.vue')['default']
     EssentialLink: typeof import('./components/EssentialLink.vue')['default']
     ExampleComponent: typeof import('./components/ExampleComponent.vue')['default']
     MainDrawer: typeof import('./components/Layout/MainDrawer.vue')['default']
