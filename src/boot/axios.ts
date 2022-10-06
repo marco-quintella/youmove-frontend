@@ -25,7 +25,8 @@ export default boot(({ app, router }) => {
       if (error.response.status === 401 && accessToken && accessToken.refresh) {
         const response = await authService.refreshTokens(accessToken.refresh.token)
         LocalStorage.set('tokens', response.data)
-        return response
+        error.config.headers.Authorization = `Bearer ${response.data.access?.token}`
+        return api.request(error.config)
       }
       return Promise.reject(error)
     }

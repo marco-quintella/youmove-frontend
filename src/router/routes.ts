@@ -11,6 +11,13 @@ const routes: RouteRecordRaw[] = [
           default: () => import('pages/IndexPage.vue'),
           header: () => import('components/Layout/MainToolbar.vue')
         }
+      },
+      {
+        path: '/teams/:id',
+        components: {
+          default: () => import('pages/teams/TeamIndex.vue'),
+          header: () => import('components/Layout/MainToolbar.vue')
+        }
       }
     ]
   },
