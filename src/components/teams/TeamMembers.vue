@@ -11,15 +11,15 @@
               q-td(key="name")
                 .row.items-center
                   .col {{props.row.name}}
-                  .col-auto(v-if="props.row.role")
-                    q-chip(color="primary" text-color="secondary") {{props.row.role}}
+                  .col-auto(v-if="isAdmin(props.row)")
+                    q-chip(color="primary" text-color="secondary") Admin
               q-td(key="email") {{ props.row.email }}
               q-td.text-right(key="config")
                 q-btn(icon="mdi-dots-vertical" flat round dense :disable="props.row.role === 'admin'")
 </template>
 <script setup lang="ts">
 import type { PropType } from 'vue'
-import type { Team, QuasarTableColumns } from '../../types'
+import type { Team, QuasarTableColumns, User } from 'types/index.d'
 
 const props = defineProps({
   team: {
@@ -50,4 +50,6 @@ const columns: QuasarTableColumns = [
     align: 'right'
   }
 ]
+
+const isAdmin = (user: User) => props.team.owner.id === user.id
 </script>

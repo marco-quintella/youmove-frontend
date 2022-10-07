@@ -8,6 +8,7 @@ export {}
 declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     ClickableItemSection: typeof import('./components/ClickableItemSection.vue')['default']
+    CreateCategoryDialog: typeof import('./components/categories/CreateCategoryDialog.vue')['default']
     CreateProjectDialog: typeof import('./components/projects/CreateProjectDialog.vue')['default']
     CreateTeam: typeof import('./components/teams/CreateTeam.vue')['default']
     CreateTeamDialog: typeof import('./components/teams/CreateTeamDialog.vue')['default']

@@ -14,6 +14,7 @@ declare global {
   const authService: typeof import('./services/auth.service')['default']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const axios: typeof import('./boot/axios')['default']
+  const categoryService: typeof import('./services/category.service')['default']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -295,6 +296,7 @@ declare module '@vue/runtime-core' {
     readonly authService: UnwrapRef<typeof import('./services/auth.service')['default']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly axios: UnwrapRef<typeof import('./boot/axios')['default']>
+    readonly categoryService: UnwrapRef<typeof import('./services/category.service')['default']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>

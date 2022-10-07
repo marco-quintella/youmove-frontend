@@ -1,6 +1,7 @@
 import { Document, PaginatedQuery, PaginatedResponse } from './common'
 import { Team } from './team'
 import { User } from './user'
+
 export interface Project extends Document {
   name: string
   active: boolean

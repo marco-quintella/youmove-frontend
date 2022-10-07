@@ -13,6 +13,7 @@
     "authService": true,
     "autoResetRef": true,
     "axios": true,
+    "categoryService": true,
     "computed": true,
     "computedAsync": true,
     "computedEager": true,

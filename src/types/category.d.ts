@@ -7,4 +7,7 @@ export interface Category extends Document {
 
 export interface GetCategoriesQuery extends Partial<Category>, Partial<PaginatedQuery> { }
 export type GetCategoriesResponse = PaginatedResponse<Category>
-export type CreateCategoryPayload = Partial<Category>
+export interface CreateCategoryPayload {
+  category: Partial<Category>
+  projectId: string
+}

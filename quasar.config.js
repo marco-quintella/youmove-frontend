@@ -77,9 +77,12 @@ module.exports = configure(function (/* ctx */) {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {
-      //   viteConf.resolve.alias.src = path.resolve(__dirname, 'src')
-      // },
+      extendViteConf (viteConf) {
+        viteConf.resolve.alias.types = path.resolve(__dirname, 'src', 'types')
+        viteConf.resolve.alias.utils = path.resolve(__dirname, 'src', 'utils')
+        viteConf.resolve.alias.services = path.resolve(__dirname, 'src', 'services')
+        viteConf.resolve.alias.composables = path.resolve(__dirname, 'src', 'composables')
+      },
       // viteVuePluginOptions: {},
 
       vitePlugins: [

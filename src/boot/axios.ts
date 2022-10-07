@@ -22,11 +22,21 @@ export default boot(({ app, router }) => {
     res => res,
     async error => {
       const accessToken = LocalStorage.getItem('tokens') as AuthTokens
-      if (error.response.status === 401 && accessToken && accessToken.refresh) {
-        const response = await authService.refreshTokens(accessToken.refresh.token)
-        LocalStorage.set('tokens', response.data)
-        error.config.headers.Authorization = `Bearer ${response.data.access?.token}`
-        return api.request(error.config)
+      if (error.response.status === 401 && accessToken && accessToken.refresh && error.request.responseURL.indexOf('refresh-tokens') === -1) {
+        try {
+          const response = await authService.refreshTokens(accessToken.refresh.token)
+          LocalStorage.set('tokens', response.data)
+          error.config.headers.Authorization = `Bearer ${response.data.access?.token}`
+          return api.request(error.config)
+        } catch (e) {
+          LocalStorage.remove('tokens')
+          LocalStorage.remove('user')
+          router.push('/login')
+        }
+      } else {
+        LocalStorage.remove('tokens')
+        LocalStorage.remove('user')
+        router.push('/login')
       }
       return Promise.reject(error)
     }
