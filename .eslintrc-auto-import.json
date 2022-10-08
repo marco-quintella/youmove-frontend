@@ -102,7 +102,6 @@
     "toRef": true,
     "toRefs": true,
     "triggerRef": true,
-    "tryCatch": true,
     "tryOnBeforeMount": true,
     "tryOnBeforeUnmount": true,
     "tryOnMounted": true,
