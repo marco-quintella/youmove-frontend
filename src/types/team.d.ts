@@ -1,5 +1,5 @@
-import { Document, PaginatedQuery, PaginatedResponse } from './common'
-import { User } from './user.d'
+import type { User, Document, PaginatedQuery, PaginatedResponse } from '.'
+
 export interface Team extends Document {
   name: string
   members: User[]

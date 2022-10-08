@@ -18,6 +18,19 @@ declare module '@vue/runtime-core' {
 const api = axios.create({ baseURL: 'http://localhost:3000/v1/', withCredentials: true })
 
 export default boot(({ app, router }) => {
+  api.interceptors.request.use(
+    async config => {
+      const tokens = LocalStorage.getItem('tokens') as AuthTokens
+      if (tokens && tokens.access && tokens.refresh) {
+        config.headers.Authorization = `Bearer ${tokens.access.token}`
+      }
+      return config
+    },
+    error => {
+      return Promise.reject(error)
+    }
+  )
+
   api.interceptors.response.use(
     res => res,
     async error => {
@@ -38,19 +51,6 @@ export default boot(({ app, router }) => {
         LocalStorage.remove('user')
         router.push('/login')
       }
-      return Promise.reject(error)
-    }
-  )
-
-  api.interceptors.request.use(
-    async config => {
-      const tokens = LocalStorage.getItem('tokens') as AuthTokens
-      if (tokens && tokens.access && tokens.refresh) {
-        if (tokens && tokens.access) config.headers.Authorization = `Bearer ${tokens.access.token}`
-      }
-      return config
-    },
-    error => {
       return Promise.reject(error)
     }
   )

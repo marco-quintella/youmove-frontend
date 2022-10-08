@@ -11,6 +11,8 @@ q-expansion-item.projects-expansion-item(label="Projects" dense)
           router-link(:to="`/projects/${project.id}`") {{ project.name }}
         q-item-section(side)
           q-btn(v-if="project.id" icon="mdi-plus" flat dense size="xs" round @click.prevent="onClickNewCategory(project.id)")
+      q-item(v-for="category in project.categories" :key="category.id" dense clickable)
+        q-item-section {{ category.name }}
 </template>
 <script setup lang="ts">
 import { useQuasar } from 'quasar'

@@ -45,14 +45,12 @@ const onSubmit = async () => {
     if (model.email || model.password || model.name) {
       await authStore.register(model)
         .catch(() => quasar.loading.hide())
+      if (quasar.localStorage.getItem('token')) {
+        console.debug('Register successful')
+        quasar.loading.hide()
+        router.push('/')
+      }
     }
   }, 1000)
 }
-
-watchEffect(async () => {
-  if (authStore.user && authStore.tokens) {
-    await router.push('/')
-    quasar.loading.hide()
-  }
-})
 </script>

@@ -1,6 +1,4 @@
-import { Document, PaginatedQuery, PaginatedResponse } from './common'
-import { Team } from './team'
-import { User } from './user'
+import type { Team, User, Category, Folder, PaginatedQuery, PaginatedResponse, Document } from '.'
 
 export interface Project extends Document {
   name: string
@@ -9,6 +7,8 @@ export interface Project extends Document {
   team: Team
   owner: User
   initials: string
+  categories: Category[]
+  folders: Folder[]
 }
 
 export type GetProjectsQuery = PaginatedQuery

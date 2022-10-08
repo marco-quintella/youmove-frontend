@@ -1,4 +1,4 @@
-import { Document, PaginatedQuery, PaginatedResponse } from './common'
+import type { Document, PaginatedQuery, PaginatedResponse } from '.'
 
 export interface Category extends Document {
   name: string

@@ -1,5 +1,4 @@
-import { Document, PaginatedResponse } from './common.d'
-import { PaginatedQuery } from './common'
+import type { Document, PaginatedResponse, PaginatedQuery } from '.'
 
 export interface User extends Document {
   email: string

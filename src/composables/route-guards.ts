@@ -1,3 +1,4 @@
+import { LocalStorage } from 'quasar'
 import { useAuthStore } from 'src/stores/auth'
 
 export default function useRouteGuard () {
@@ -8,7 +9,12 @@ export default function useRouteGuard () {
     if (to.matched.some(record => record.meta.public)) {
       next()
     } else {
-      authStore.isAuthenticated ? next() : next('/login')
+      authStore.fetchLocalStorage()
+      if (LocalStorage.getItem('tokens')) {
+        next()
+      } else {
+        next('/login')
+      }
     }
   })
 }

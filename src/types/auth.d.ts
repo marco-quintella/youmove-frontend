@@ -1,4 +1,4 @@
-import { User } from 'src/types/user'
+import type { User } from '.'
 
 export interface Token {
   token: string
