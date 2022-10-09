@@ -8,7 +8,13 @@ declare global {
   const $ref: typeof import('vue/macros')['$ref']
   const $shallowRef: typeof import('vue/macros')['$shallowRef']
   const $toRef: typeof import('vue/macros')['$toRef']
+  const AuthService: typeof import('./services/index')['AuthService']
+  const CategoryService: typeof import('./services/index')['CategoryService']
   const EffectScope: typeof import('vue')['EffectScope']
+  const ProjectService: typeof import('./services/index')['ProjectService']
+  const StatusService: typeof import('./services/index')['StatusService']
+  const TeamService: typeof import('./services/index')['TeamService']
+  const UserService: typeof import('./services/index')['UserService']
   const api: typeof import('./boot/axios')['api']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const authService: typeof import('./services/auth.service')['default']
@@ -290,7 +296,13 @@ declare module '@vue/runtime-core' {
     readonly $ref: UnwrapRef<typeof import('vue/macros')['$ref']>
     readonly $shallowRef: UnwrapRef<typeof import('vue/macros')['$shallowRef']>
     readonly $toRef: UnwrapRef<typeof import('vue/macros')['$toRef']>
+    readonly AuthService: UnwrapRef<typeof import('./services/index')['AuthService']>
+    readonly CategoryService: UnwrapRef<typeof import('./services/index')['CategoryService']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ProjectService: UnwrapRef<typeof import('./services/index')['ProjectService']>
+    readonly StatusService: UnwrapRef<typeof import('./services/index')['StatusService']>
+    readonly TeamService: UnwrapRef<typeof import('./services/index')['TeamService']>
+    readonly UserService: UnwrapRef<typeof import('./services/index')['UserService']>
     readonly api: UnwrapRef<typeof import('./boot/axios')['api']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authService: UnwrapRef<typeof import('./services/auth.service')['default']>

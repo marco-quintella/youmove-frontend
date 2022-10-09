@@ -22,6 +22,7 @@ declare module '@vue/runtime-core' {
     ProjectsExpansionItem: typeof import('./components/Layout/MainDrawer/ProjectsExpansionItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StatusCard: typeof import('./components/status/StatusCard.vue')['default']
     TeamMembers: typeof import('./components/teams/TeamMembers.vue')['default']
     TeamsExpansionItem: typeof import('./components/Layout/MainDrawer/TeamsExpansionItem.vue')['default']
   }

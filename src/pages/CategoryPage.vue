@@ -22,7 +22,13 @@ q-page
               .text-weight-bold Category Name
               q-btn.q-ml-sm(flat dense) + New Task
           .col-auto Show Closed
-        create-status-separator-btn(v-if="statusesNumber === 0" :category-id="categoryId" @created="onNewStatusCreated")
+        .row
+          .col
+            create-status-separator-btn(v-if="statusesNumber === 0" :category-id="categoryId" @created="onNewStatusCreated")
+        .row
+          template(v-for="status in statuses" :key="status.id")
+            .col
+              status-card(:status="status" :category-id="categoryId")
 </template>
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
