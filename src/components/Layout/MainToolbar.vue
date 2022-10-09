@@ -1,9 +1,10 @@
 <template lang="pug">
 q-header
   q-toolbar
-    drawer-open-button
-    q-tabs(v-model="mainToolBarTabs")
-      q-tab(name="tab1" label="Tab 1")
+    q-img(src="~/assets/logo-trimmy.png", style="max-width: 120px")
+    drawer-open-button.q-ml-md
+    q-tabs.q-ml-md(v-model="mainToolBarTabs")
+      q-tab(name="tab1" label="Home")
     q-space
     q-btn Calendar
     q-separator(vertical inset)

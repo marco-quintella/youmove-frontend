@@ -2,7 +2,8 @@
 q-drawer.drawer(v-model="isDrawerOpen" bordered)
   .col-auto
     .row.justify-between.q-pa-sm.items-center
-      .col-auto YOUMOVE
+      .col
+        q-img(src="~/assets/logo-trimmy.png", style="max-width: 120px")
       .col-auto
         .row
           .col-auto
