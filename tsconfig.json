@@ -8,20 +8,8 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "src/*": [
-        "src/*"
-      ],
       "app/*": [
         "*"
-      ],
-      "components/*": [
-        "src/components/*"
-      ],
-      "layouts/*": [
-        "src/layouts/*"
-      ],
-      "pages/*": [
-        "src/pages/*"
       ],
       "assets/*": [
         "src/assets/*"
@@ -29,20 +17,41 @@
       "boot/*": [
         "src/boot/*"
       ],
-      "stores/*": [
-        "src/stores/*"
+      "components/*": [
+        "src/components/*"
       ],
-      "types/*": [
-        "src/types/*"
+      "composables/*": [
+        "src/composables/*"
       ],
-      "utils/*": [
-        "src/utils/*"
+      "layouts/*": [
+        "src/layouts/*"
+      ],
+      "pages/*": [
+        "src/pages/*"
       ],
       "services/*": [
         "src/services/*"
       ],
-      "composables/*": [
-        "src/composables/*"
+      "services": [
+        "src/services/index.ts"
+      ],
+      "src/*": [
+        "src/*"
+      ],
+      "stores/*": [
+        "src/stores/*"
+      ],
+      "stores": [
+        "src/stores/index.ts"
+      ],
+      "types/*": [
+        "src/types/*"
+      ],
+      "types": [
+        "src/types/index.d.ts"
+      ],
+      "utils/*": [
+        "src/utils/*"
       ],
     }
   },
