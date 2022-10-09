@@ -91,6 +91,7 @@
     "shallowReactive": true,
     "shallowReadonly": true,
     "shallowRef": true,
+    "statusService": true,
     "syncRef": true,
     "syncRefs": true,
     "teamService": true,

@@ -10,6 +10,7 @@ declare module '@vue/runtime-core' {
     ClickableItemSection: typeof import('./components/ClickableItemSection.vue')['default']
     CreateCategoryDialog: typeof import('./components/categories/CreateCategoryDialog.vue')['default']
     CreateProjectDialog: typeof import('./components/projects/CreateProjectDialog.vue')['default']
+    CreateStatusSeparatorBtn: typeof import('./components/status/CreateStatusSeparatorBtn.vue')['default']
     CreateTeam: typeof import('./components/teams/CreateTeam.vue')['default']
     CreateTeamDialog: typeof import('./components/teams/CreateTeamDialog.vue')['default']
     DrawerOpenButton: typeof import('./components/Layout/DrawerOpenButton.vue')['default']

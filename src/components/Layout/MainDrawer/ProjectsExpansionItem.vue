@@ -11,7 +11,9 @@ q-expansion-item.projects-expansion-item(label="Projects" dense)
           router-link(:to="`/projects/${project.id}`") {{ project.name }}
         q-item-section(side)
           q-btn(v-if="project.id" icon="mdi-plus" flat dense size="xs" round @click.prevent="onClickNewCategory(project.id)")
-      q-item(v-for="category in project.categories" :key="category.id" dense clickable)
+      q-item(v-for="category in project.categories" :key="category.id" dense clickable :to="`/category/${category.id}`")
+        q-item-section.q-pl-md(avatar)
+          q-avatar(:style="{ 'background-color': category.color }" size="10px")
         q-item-section {{ category.name }}
 </template>
 <script setup lang="ts">

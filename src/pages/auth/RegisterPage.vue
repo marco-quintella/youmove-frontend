@@ -42,14 +42,20 @@ const model = reactive<RegisterBody>({
 const onSubmit = async () => {
   quasar.loading.show()
   setTimeout(async () => {
-    if (model.email || model.password || model.name) {
-      await authStore.register(model)
-        .catch(() => quasar.loading.hide())
-      if (quasar.localStorage.getItem('token')) {
-        console.debug('Register successful')
-        quasar.loading.hide()
-        router.push('/')
+    try {
+      if (model.email && model.password && model.name) {
+        await authStore.register(model)
+        if (authStore.tokens) {
+          await router.push('/')
+        } else {
+          throw Error
+        }
       }
+    } catch (e) {
+      console.error('Error registering', e)
+      quasar.notify({ type: 'negative', message: 'Error registering' })
+    } finally {
+      quasar.loading.hide()
     }
   }, 1000)
 }

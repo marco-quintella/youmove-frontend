@@ -18,6 +18,13 @@ const routes: RouteRecordRaw[] = [
           default: () => import('pages/teams/TeamIndex.vue'),
           header: () => import('components/Layout/MainToolbar.vue')
         }
+      },
+      {
+        path: '/category/:categoryId',
+        components: {
+          default: () => import('pages/CategoryPage.vue'),
+          header: () => import('components/Layout/MainToolbar.vue')
+        }
       }
     ]
   },

@@ -22,16 +22,14 @@ q-layout(view="lHh lpr lFf" style="background-image: linear-gradient(to right to
               router-link(to="forgot-password") Forgot Password?
 </template>
 <script setup lang="ts">
-import { useAuthStore } from 'src/stores/auth'
-import type { LoginBody } from '../../types/auth.d'
-import formRules from '../../composables/form-rules'
+import { useAuthStore } from 'stores/auth'
+import type { LoginBody } from 'types'
+import formRules from 'composables/form-rules'
 import { useQuasar } from 'quasar'
-import { useAppStore } from '../../stores/app'
 
 const authStore = useAuthStore()
 const router = useRouter()
 const quasar = useQuasar()
-const appStore = useAppStore()
 
 const model = reactive<LoginBody>({
   email: '',
@@ -44,11 +42,10 @@ const onSubmit = async () => {
     try {
       if (model.email && model.password) {
         await authStore.login(model)
-        console.debug('token 1', authStore.tokens)
         if (authStore.tokens) {
-          console.debug('token 2', authStore.tokens)
-          console.debug('Login successful')
-          router.push('/')
+          await router.push('/')
+        } else {
+          throw Error
         }
       }
     } catch (e) {
