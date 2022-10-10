@@ -28,7 +28,7 @@ q-page
         .row
           template(v-for="status in statuses" :key="status.id")
             .col
-              status-card(:status="status" :category-id="categoryId")
+              status-card(:status="status" :category-id="categoryId" @updateStatus="onStatusUpdated")
 </template>
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
@@ -45,13 +45,17 @@ const statusesNumber = computed(() => statuses.value.length)
 
 const search = ref('')
 
+const fetchStatus = async () => {
+  const { results } = await StatusService.getByCategoryId(categoryId.value)
+  statuses.value = results
+}
+
 const onNewStatusCreated = async () => {
   await fetchStatus()
 }
 
-const fetchStatus = async () => {
-  const { results } = await StatusService.getByCategoryId(categoryId.value)
-  statuses.value = results
+const onStatusUpdated = async () => {
+  await fetchStatus()
 }
 
 onMounted(async () => {

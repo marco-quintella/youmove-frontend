@@ -12,4 +12,9 @@ export default class StatusService {
     const { data } = await api.post<Status>(`${this.uri}/create/category/${categoryId}`, { ...status })
     return data
   }
+
+  static updateById = async (statusId: string, status: Partial<Status>) => {
+    const { data } = await api.patch<Status>(`${this.uri}/update/${statusId}`, { ...status })
+    return data
+  }
 }
