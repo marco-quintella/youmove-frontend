@@ -1,7 +1,8 @@
 import { boot } from 'quasar/wrappers'
-import axios, { AxiosInstance } from 'axios'
+import type { AxiosInstance } from 'axios'
+import axios from 'axios'
 import { LocalStorage } from 'quasar'
-import { AuthTokens } from '../types/auth'
+import type { AuthTokens } from '../types/auth'
 
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
@@ -21,14 +22,14 @@ export default boot(({ app, router }) => {
   api.interceptors.request.use(
     async config => {
       const tokens = LocalStorage.getItem('tokens') as AuthTokens
-      if (tokens && tokens.access && tokens.refresh) {
+      if (tokens && tokens.access && tokens.refresh)
         config.headers.Authorization = `Bearer ${tokens.access.token}`
-      }
+
       return config
     },
     error => {
       return Promise.reject(error)
-    }
+    },
   )
 
   api.interceptors.response.use(
@@ -36,25 +37,27 @@ export default boot(({ app, router }) => {
     async error => {
       const accessToken = LocalStorage.getItem('tokens') as AuthTokens
       if (error.response.status === 401) {
-        if (accessToken && accessToken.refresh && error.request.responseURL.indexOf('refresh-tokens') === -1) {
+        if (accessToken && accessToken.refresh && !error.request.responseURL.includes('refresh-tokens')) {
           try {
             const response = await authService.refreshTokens(accessToken.refresh.token)
             LocalStorage.set('tokens', response.data)
             error.config.headers.Authorization = `Bearer ${response.data.access?.token}`
             return api.request(error.config)
-          } catch (e) {
+          }
+          catch (e) {
             LocalStorage.remove('tokens')
             LocalStorage.remove('user')
             router.push('/login')
           }
-        } else {
+        }
+        else {
           LocalStorage.remove('tokens')
           LocalStorage.remove('user')
           router.push('/login')
         }
       }
       return Promise.reject(error)
-    }
+    },
   )
 
   // for use inside Vue files (Options API) through this.$axios and this.$api

@@ -1,3 +1,40 @@
+<script setup lang="ts">
+import type { PropType } from 'vue'
+import type { QuasarTableColumns, Team, User } from 'types/index.d'
+
+const props = defineProps({
+  team: {
+    type: Object as PropType<Team>,
+    required: true,
+  },
+})
+
+const columns: QuasarTableColumns = [
+  {
+    name: 'name',
+    label: 'Name',
+    field: 'name',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    name: 'email',
+    label: 'Email',
+    field: 'email',
+    align: 'left',
+    sortable: true,
+  },
+  {
+    name: 'config',
+    label: 'Config',
+    field: 'config',
+    align: 'right',
+  },
+]
+
+const isAdmin = (user: User) => props.team.owner.id === user.id
+</script>
+
 <template lang="pug">
 .row
   .col.q-px-md
@@ -17,39 +54,3 @@
               q-td.text-right(key="config")
                 q-btn(icon="mdi-dots-vertical" flat round dense :disable="props.row.role === 'admin'")
 </template>
-<script setup lang="ts">
-import type { PropType } from 'vue'
-import type { Team, QuasarTableColumns, User } from 'types/index.d'
-
-const props = defineProps({
-  team: {
-    type: Object as PropType<Team>,
-    required: true
-  }
-})
-
-const columns: QuasarTableColumns = [
-  {
-    name: 'name',
-    label: 'Name',
-    field: 'name',
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'email',
-    label: 'Email',
-    field: 'email',
-    align: 'left',
-    sortable: true
-  },
-  {
-    name: 'config',
-    label: 'Config',
-    field: 'config',
-    align: 'right'
-  }
-]
-
-const isAdmin = (user: User) => props.team.owner.id === user.id
-</script>

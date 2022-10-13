@@ -1,44 +1,15 @@
-<template lang="pug">
-q-page
-  .column
-    .col-auto.list-toolbar
-      .row.justify-between.items-center
-        .col-auto.list-toolbar__search-box
-          .row
-            q-input(v-model="search" borderless dense placeholder="Search")
-              template(#prepend)
-                q-icon(name="mdi-magnify")
-            q-separator(vertical inset)
-        .col-auto
-          .row
-            q-btn(flat dense no-caps) Filter
-            q-btn(flat dense no-caps) Group by
-            q-btn(flat dense no-caps) Subtasks
-    .col.q-pa-md
-      q-card.bg-transparent.q-pa-sm(flat bordered)
-        .row.justify-between.items-center
-          .col-auto
-            .row.items-center
-              .text-weight-bold Category Name
-              q-btn.q-ml-sm(flat dense) + New Task
-          .col-auto Show Closed
-        .row
-          .col
-            create-status-separator-btn(v-if="statusesNumber === 0" :category-id="categoryId" @created="onNewStatusCreated")
-        .row
-          template(v-for="status in statuses" :key="status.id")
-            .col
-              status-card(:status="status" :category-id="categoryId" @updateStatus="onStatusUpdated")
-</template>
 <script setup lang="ts">
 import { useQuasar } from 'quasar'
 import { StatusService } from 'services'
 import type { Status } from 'types'
+import { useAppStore } from '../stores/app'
 
 const quasar = useQuasar()
 const route = useRoute()
+const appStore = useAppStore()
 
 const categoryId = computed(() => route.params.categoryId as string)
+const category = computed(() => appStore.activeCategory)
 
 const statuses = ref<Status[]>([])
 const statusesNumber = computed(() => statuses.value.length)
@@ -62,14 +33,52 @@ onMounted(async () => {
   quasar.loading.show()
   try {
     await fetchStatus()
-  } catch (e) {
+  }
+  catch (e) {
     console.error('Error getting statuses', e)
     quasar.notify({ type: 'negative', message: 'Error getting statuses' })
-  } finally {
+  }
+  finally {
     quasar.loading.hide()
   }
 })
 </script>
+
+<template lang="pug">
+q-page
+  .column
+    .col-auto.list-toolbar
+      .row.justify-between.items-center
+        .col-auto.list-toolbar__search-box
+          .row
+            q-input(v-model="search" borderless dense placeholder="Search")
+              template(#prepend)
+                q-icon(name="mdi-magnify")
+            q-separator(vertical inset)
+        .col-auto
+          .row
+            q-btn(flat dense no-caps) Filter
+            q-btn(flat dense no-caps) Group by
+            q-btn(flat dense no-caps) Subtasks
+    .col.q-pa-md(v-if="category")
+      q-card.bg-transparent.q-pa-sm(flat bordered)
+        .row.justify-between.items-center
+          .col-auto
+            .row.items-center
+              .text-weight-bold {{category.name}}
+              q-btn.q-ml-sm(flat dense) + New Task
+
+          .col-auto Show Closed
+        create-task-form.q-my-sm(:statuses="statuses")
+        .row
+          .col
+            create-status-separator-btn(v-if="statusesNumber === 0" :category-id="categoryId" @created="onNewStatusCreated")
+        .row
+          template(v-for="status in statuses" :key="status.id")
+            .col
+              status-card(:status="status" :category-id="categoryId" @updateStatus="onStatusUpdated")
+</template>
+
 <style lang="sass">
 .list-toolbar
   border: 1px solid rgba(0, 0, 0, 0.25)
@@ -88,5 +97,4 @@ onMounted(async () => {
     transition: background-color 0.4s ease
   &:active
     background: rgba(0, 0, 0, 0.1)
-
 </style>

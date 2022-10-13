@@ -1,4 +1,4 @@
-import type { PaginatedResponse, CreateStatusPayload, Status } from '../types'
+import type { CreateStatusPayload, PaginatedResponse, Status } from '../types'
 
 export default class StatusService {
   static uri = '/status'

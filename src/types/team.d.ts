@@ -1,8 +1,8 @@
-import type { User, Document, PaginatedQuery, PaginatedResponse } from '.'
+import type { Document, PaginatedQuery, PaginatedResponse, TeamMember, User } from 'types'
 
 export interface Team extends Document {
   name: string
-  members: User[]
+  members: TeamMember[]
   active: boolean
   color: string
   initials: string

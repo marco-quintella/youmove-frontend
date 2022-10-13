@@ -1,5 +1,5 @@
 import { api } from 'src/boot/axios'
-import { GetUsersQuery, GetUsersResponse, User } from 'src/types/user'
+import type { GetUsersQuery, GetUsersResponse, User } from 'src/types/user'
 
 export default class UserService {
   static uri = '/users'

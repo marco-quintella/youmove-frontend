@@ -11,5 +11,5 @@ export {
   ProjectService,
   StatusService,
   TeamService,
-  UserService
+  UserService,
 }

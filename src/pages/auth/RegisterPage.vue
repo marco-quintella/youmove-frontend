@@ -1,3 +1,44 @@
+<script setup lang="ts">
+import { useQuasar } from 'quasar'
+import formRules from 'src/composables/form-rules'
+import { useAuthStore } from 'src/stores/auth'
+import type { RegisterBody } from 'src/types/auth.d'
+import { useAppStore } from '../../stores/app'
+
+const authStore = useAuthStore()
+const router = useRouter()
+const quasar = useQuasar()
+const appStore = useAppStore()
+
+const model = reactive<RegisterBody>({
+  name: '',
+  email: '',
+  password: '',
+})
+
+const onSubmit = async () => {
+  quasar.loading.show()
+  setTimeout(async () => {
+    try {
+      if (model.email && model.password && model.name) {
+        await authStore.register(model)
+        if (authStore.tokens)
+          await router.push('/')
+        else
+          throw Error
+      }
+    }
+    catch (e) {
+      console.error('Error registering', e)
+      quasar.notify({ type: 'negative', message: 'Error registering' })
+    }
+    finally {
+      quasar.loading.hide()
+    }
+  }, 1000)
+}
+</script>
+
 <template lang="pug">
 q-layout(view="lHh lpr lFf" style="background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);")
   q-page-container
@@ -21,42 +62,3 @@ q-layout(view="lHh lpr lFf" style="background-image: linear-gradient(to right to
               q-input(outlined label="Password" type="password" v-model="model.password" :rules="[formRules.required('Password is required')]" autocomplete="current-password" dense)
               q-btn.q-mb-md(color="primary" type="submit" no-caps style="font-size: 1rem;") Register
 </template>
-<script setup lang="ts">
-import { useQuasar } from 'quasar'
-import formRules from 'src/composables/form-rules'
-import { useAuthStore } from 'src/stores/auth'
-import type { RegisterBody } from 'src/types/auth.d'
-import { useAppStore } from '../../stores/app'
-
-const authStore = useAuthStore()
-const router = useRouter()
-const quasar = useQuasar()
-const appStore = useAppStore()
-
-const model = reactive<RegisterBody>({
-  name: '',
-  email: '',
-  password: ''
-})
-
-const onSubmit = async () => {
-  quasar.loading.show()
-  setTimeout(async () => {
-    try {
-      if (model.email && model.password && model.name) {
-        await authStore.register(model)
-        if (authStore.tokens) {
-          await router.push('/')
-        } else {
-          throw Error
-        }
-      }
-    } catch (e) {
-      console.error('Error registering', e)
-      quasar.notify({ type: 'negative', message: 'Error registering' })
-    } finally {
-      quasar.loading.hide()
-    }
-  }, 1000)
-}
-</script>

@@ -1,4 +1,4 @@
-import type { CreateProjectPayload, Project, GetProjectsQuery, GetProjectsResponse } from '../types/project'
+import type { CreateProjectPayload, GetProjectsQuery, GetProjectsResponse, Project } from '../types/project'
 
 export default class ProjectService {
   static uri = '/projects'

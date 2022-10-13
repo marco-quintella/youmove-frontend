@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useAppStore } from 'src/stores/app'
+
+const mainToolBarTabs = ref('tab1')
+</script>
+
 <template lang="pug">
 q-header
   q-toolbar
@@ -12,7 +18,3 @@ q-header
     q-separator(vertical inset)
     q-btn Mentions
 </template>
-<script setup lang="ts">import { useAppStore } from 'src/stores/app'
-
-const mainToolBarTabs = ref('tab1')
-</script>

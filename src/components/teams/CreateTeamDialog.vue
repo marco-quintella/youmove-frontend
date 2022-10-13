@@ -1,3 +1,26 @@
+<script setup lang="ts">
+import { useDialogPluginComponent, useQuasar } from 'quasar'
+import { useAppStore } from '../../stores/app'
+
+defineEmits([...useDialogPluginComponent.emits])
+
+const { dialogRef, onDialogCancel, onDialogHide, onDialogOK } = useDialogPluginComponent()
+const quasar = useQuasar()
+const appStore = useAppStore()
+
+const model = reactive({
+  name: '',
+})
+
+const onSubmit = async () => {
+  quasar.loading.show()
+  await teamService.createTeam({ name: model.name })
+  await appStore.getUserTeams()
+  quasar.loading.hide()
+  onDialogOK()
+}
+</script>
+
 <template lang="pug">
 q-dialog(ref="dialogRef" @hide="onDialogHide" persistent)
   q-card.q-dialog-plugin.q-px-lg.q-py-lg
@@ -10,25 +33,3 @@ q-dialog(ref="dialogRef" @hide="onDialogHide" persistent)
         q-card-actions.q-mt-md.q-pa-none.full-width(align="center")
           q-btn.full-width(color="primary" label="Save" type="submit")
 </template>
-<script setup lang="ts">
-import { useDialogPluginComponent, useQuasar } from 'quasar'
-import { useAppStore } from '../../stores/app'
-
-defineEmits([...useDialogPluginComponent.emits])
-
-const { dialogRef, onDialogCancel, onDialogHide, onDialogOK } = useDialogPluginComponent()
-const quasar = useQuasar()
-const appStore = useAppStore()
-
-const model = reactive({
-  name: ''
-})
-
-const onSubmit = async () => {
-  quasar.loading.show()
-  await teamService.createTeam({ name: model.name })
-  await appStore.getUserTeams()
-  quasar.loading.hide()
-  onDialogOK()
-}
-</script>

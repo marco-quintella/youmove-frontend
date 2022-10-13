@@ -26,17 +26,18 @@ module.exports = {
 
     // https://github.com/typescript-eslint/typescript-eslint/tree/master/packages/eslint-plugin#usage
     // ESLint typescript rules
-    'plugin:@typescript-eslint/recommended',
+    // 'plugin:@typescript-eslint/recommended',
 
     // Uncomment any of the lines below to choose desired strictness,
     // but leave only one uncommented!
     // See https://eslint.vuejs.org/rules/#available-rules
-    'plugin:vue/vue3-essential', // Priority A: Essential (Error Prevention)
+    // 'plugin:vue/vue3-essential', // Priority A: Essential (Error Prevention)
     // 'plugin:vue/vue3-strongly-recommended', // Priority B: Strongly Recommended (Improving Readability)
     // 'plugin:vue/vue3-recommended', // Priority C: Recommended (Minimizing Arbitrary Choices and Cognitive Overhead)
 
-    'standard',
+    // 'standard',
     './.eslintrc-auto-import.json',
+    '@antfu'
   ],
 
   plugins: [
@@ -59,7 +60,12 @@ module.exports = {
     __QUASAR_SSR_PWA__: 'readonly',
     process: 'readonly',
     Capacitor: 'readonly',
-    chrome: 'readonly'
+    chrome: 'readonly',
+    $ref: 'readonly',
+    $computed: 'readonly',
+    $shallowRef: 'readonly',
+    $customRef: 'readonly',
+    $toRef: 'readonly'
   },
 
   // add your custom rules here
@@ -102,6 +108,8 @@ module.exports = {
     'no-unused-vars': 'off',
 
     // allow debugger during development only
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+
+    'vue/no-setup-props-destructure': 'off',
   }
 }

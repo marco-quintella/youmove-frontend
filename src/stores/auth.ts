@@ -1,8 +1,8 @@
-import type { AuthTokens, LoginBody, RegisterBody } from './../types/auth.d'
-import type { User } from './../types/user.d'
 import { defineStore } from 'pinia'
 import AuthService from 'src/services/auth.service'
 import { LocalStorage } from 'quasar'
+import type { User } from './../types/user.d'
+import type { AuthTokens, LoginBody, RegisterBody } from './../types/auth.d'
 
 export const useAuthStore = defineStore('auth', () => {
   const localAuth = LocalStorage.getItem('tokens') as AuthTokens | undefined
@@ -23,7 +23,8 @@ export const useAuthStore = defineStore('auth', () => {
       LocalStorage.set('user', data.user)
       tokens.value = data.tokens
       user.value = data.user
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
@@ -35,30 +36,35 @@ export const useAuthStore = defineStore('auth', () => {
       LocalStorage.set('user', data.user)
       tokens.value = data.tokens
       user.value = data.user
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
 
   const logout = async () => {
     try {
-      if (!tokens.value || !tokens.value.refresh || !tokens.value.refresh.token) return
+      if (!tokens.value || !tokens.value.refresh || !tokens.value.refresh.token)
+        return
       await AuthService.logout(tokens.value.refresh.token)
       LocalStorage.remove('tokens')
       LocalStorage.remove('user')
       tokens.value = undefined
       user.value = undefined
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
 
   const refreshTokens = async () => {
     try {
-      if (!tokens.value || !tokens.value.refresh || !tokens.value.refresh.token) return
+      if (!tokens.value || !tokens.value.refresh || !tokens.value.refresh.token)
+        return
       const { data } = await AuthService.refreshTokens(tokens.value.refresh.token)
       tokens.value = data
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
@@ -66,7 +72,8 @@ export const useAuthStore = defineStore('auth', () => {
   const forgotPassword = async (email: string) => {
     try {
       await AuthService.forgotPassword(email)
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
@@ -74,7 +81,8 @@ export const useAuthStore = defineStore('auth', () => {
   const resetPassword = async (password: string, token: string) => {
     try {
       await AuthService.resetPassword(password, token)
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
@@ -82,7 +90,8 @@ export const useAuthStore = defineStore('auth', () => {
   const sendVerificationEmail = async () => {
     try {
       await AuthService.sendVerificationEmail()
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
@@ -90,7 +99,8 @@ export const useAuthStore = defineStore('auth', () => {
   const verifyEmail = async (token: string) => {
     try {
       await AuthService.verifyEmail(token)
-    } catch (error) {
+    }
+    catch (error) {
       console.error(error)
     }
   }
@@ -106,6 +116,6 @@ export const useAuthStore = defineStore('auth', () => {
     sendVerificationEmail,
     tokens,
     user,
-    verifyEmail
+    verifyEmail,
   }
 })

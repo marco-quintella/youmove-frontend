@@ -1,4 +1,4 @@
-import { CreateCategoryPayload, Category, GetCategoriesQuery, GetCategoriesResponse } from '../types/category'
+import type { Category, CreateCategoryPayload, GetCategoriesQuery, GetCategoriesResponse } from '../types/category'
 
 export default class CategoryService {
   static uri = '/categories'

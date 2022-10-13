@@ -10,5 +10,10 @@
     "hookyqr.beautify",
     "dbaeumer.jshint",
     "ms-vscode.vscode-typescript-tslint-plugin"
-  ]
+  ],
+  "prettier.enable": false,
+  "editor.formatOnSave": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  }
 }

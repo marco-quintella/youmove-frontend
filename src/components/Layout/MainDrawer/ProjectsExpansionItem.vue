@@ -1,3 +1,36 @@
+<script setup lang="ts">
+import { useQuasar } from 'quasar'
+import { useAppStore } from 'stores/app'
+import CreateCategoryDialogVue from 'components/categories/CreateCategoryDialog.vue'
+import CreateProjectDialogVue from 'components/projects/CreateProjectDialog.vue'
+
+const quasar = useQuasar()
+const appStore = useAppStore()
+
+const userProjects = computed(() => appStore.projects)
+
+const onClickNewProject = () => {
+  quasar.dialog({
+    component: CreateProjectDialogVue,
+  })
+}
+
+const onClickNewCategory = (projectId?: string) => {
+  if (projectId) {
+    quasar.dialog({
+      component: CreateCategoryDialogVue,
+      componentProps: {
+        projectId,
+      },
+    })
+  }
+}
+
+onMounted(async () => {
+  await appStore.getUserProjects()
+})
+</script>
+
 <template lang="pug">
 q-expansion-item.projects-expansion-item(label="Projects" dense)
   q-list(dense)
@@ -16,38 +49,7 @@ q-expansion-item.projects-expansion-item(label="Projects" dense)
           q-avatar(:style="{ 'background-color': category.color }" size="10px")
         q-item-section {{ category.name }}
 </template>
-<script setup lang="ts">
-import { useQuasar } from 'quasar'
-import { useAppStore } from 'stores/app'
-import CreateCategoryDialogVue from 'components/categories/CreateCategoryDialog.vue'
-import CreateProjectDialogVue from 'components/projects/CreateProjectDialog.vue'
 
-const quasar = useQuasar()
-const appStore = useAppStore()
-
-const userProjects = computed(() => appStore.projects)
-
-const onClickNewProject = () => {
-  quasar.dialog({
-    component: CreateProjectDialogVue
-  })
-}
-
-const onClickNewCategory = (projectId?: string) => {
-  if (projectId) {
-    quasar.dialog({
-      component: CreateCategoryDialogVue,
-      componentProps: {
-        projectId
-      }
-    })
-  }
-}
-
-onMounted(async () => {
-  await appStore.getUserProjects()
-})
-</script>
 <style lang="sass">
 .projects-expansion-item
   a

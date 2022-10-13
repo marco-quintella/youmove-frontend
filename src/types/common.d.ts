@@ -1,10 +1,10 @@
 export interface Timestamps {
-  createdAt?: string
-  updatedAt?: string
+  createdAt: string
+  updatedAt: string
 }
 
 export interface Document extends Timestamps {
-  id?: string
+  id: string
 }
 
 export interface PaginatedResponse<T> {

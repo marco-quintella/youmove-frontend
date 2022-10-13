@@ -1,6 +1,6 @@
 import { api } from 'src/boot/axios'
 import type { GetTeamsQuery, GetTeamsResponse, Team } from 'src/types/team.d'
-import { CreateTeamPayload } from '../types/team'
+import type { CreateTeamPayload } from '../types/team'
 
 export default class TeamService {
   static uri = '/teams'
@@ -10,4 +10,6 @@ export default class TeamService {
   static getTeamById = (id: string) => api.get<Team>(`${this.uri}/${id}`)
   static updateTeamById = (id: string, body: Partial<Team>) => api.patch<Team>(`${this.uri}/${id}`, body)
   static deleteTeamById = (id: string) => api.delete<Team>(`${this.uri}/${id}`)
+  static getByStatusId = (id: string) => api.get<Team>(`${this.uri}/status/${id}`)
+  static getByCategoryId = (id: string) => api.get<Team>(`${this.uri}/category/${id}`)
 }

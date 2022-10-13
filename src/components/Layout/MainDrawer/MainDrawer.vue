@@ -1,3 +1,19 @@
+<script setup lang="ts">
+import { useAppStore } from 'src/stores/app'
+
+const store = useAppStore()
+const isDrawerOpen = computed({
+  get: () => store.isDrawerOpen,
+  set: (value: boolean) => store.setDrawerOpen(value),
+})
+
+const toggleDrawer = () => {
+  store.setDrawerOpen(!isDrawerOpen)
+}
+
+const searchText = ref('')
+</script>
+
 <template lang="pug">
 q-drawer.drawer(v-model="isDrawerOpen" bordered)
   .col-auto
@@ -30,22 +46,7 @@ q-drawer.drawer(v-model="isDrawerOpen" bordered)
       .col-auto
         drawer-user-menu
 </template>
-<script setup lang="ts">
-import { useAppStore } from 'src/stores/app'
 
-const store = useAppStore()
-const isDrawerOpen = computed({
-  get: () => store.isDrawerOpen,
-  set: (value: boolean) => store.setDrawerOpen(value)
-})
-
-const toggleDrawer = () => {
-  store.setDrawerOpen(!isDrawerOpen)
-}
-
-const searchText = ref('')
-
-</script>
 <style lang="sass">
 .drawer
   color: #53575e

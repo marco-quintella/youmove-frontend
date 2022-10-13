@@ -1,5 +1,5 @@
-import { User } from 'src/types/user'
-import { LoginResponse, RegisterResponse, RegisterBody, LoginBody, AuthTokens } from 'src/types/auth.d'
+import type { User } from 'src/types/user'
+import type { AuthTokens, LoginBody, LoginResponse, RegisterBody, RegisterResponse } from 'src/types/auth.d'
 import { api } from 'src/boot/axios'
 
 export default class AuthService {

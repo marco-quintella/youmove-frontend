@@ -1,10 +1,9 @@
 const formRules = {
-  required: function (message: string) {
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  required(message: string) {
     return (value: any) => {
       return !!value || message
     }
-  }
+  },
 }
 
 export default formRules

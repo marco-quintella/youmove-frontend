@@ -1,3 +1,7 @@
+<script lang="ts">
+
+</script>
+
 <template lang="pug">
 q-layout(view="lHh lpr lFf")
   router-view(name="header")
@@ -5,7 +9,3 @@ q-layout(view="lHh lpr lFf")
   q-page-container
     router-view
 </template>
-
-<script lang="ts">
-
-</script>

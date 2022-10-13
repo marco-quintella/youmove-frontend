@@ -1,3 +1,44 @@
+<script setup lang="ts">
+import { useAuthStore } from 'stores/auth'
+import type { LoginBody } from 'types'
+import formRules from 'composables/form-rules'
+import { useQuasar } from 'quasar'
+
+const authStore = useAuthStore()
+const router = useRouter()
+const quasar = useQuasar()
+
+const model = reactive<LoginBody>({
+  email: '',
+  password: '',
+})
+
+const onSubmit = async () => {
+  quasar.loading.show()
+  setTimeout(async () => {
+    try {
+      if (model.email && model.password) {
+        await authStore.login(model)
+        if (authStore.tokens)
+          await router.push('/')
+        else
+          throw Error
+      }
+    }
+    catch (e) {
+      console.error('Login failed', e)
+      quasar.notify({
+        type: 'negative',
+        message: 'Login failed',
+      })
+    }
+    finally {
+      quasar.loading.hide()
+    }
+  }, 1000)
+}
+</script>
+
 <template lang="pug">
 q-layout(view="lHh lpr lFf" style="background-image: linear-gradient(to right top, #051937, #004d7a, #008793, #00bf72, #a8eb12);")
   q-page-container
@@ -21,42 +62,3 @@ q-layout(view="lHh lpr lFf" style="background-image: linear-gradient(to right to
               q-btn.q-mb-md(color="primary" type="submit" no-caps style="font-size: 1rem;") Login
               router-link(to="forgot-password") Forgot Password?
 </template>
-<script setup lang="ts">
-import { useAuthStore } from 'stores/auth'
-import type { LoginBody } from 'types'
-import formRules from 'composables/form-rules'
-import { useQuasar } from 'quasar'
-
-const authStore = useAuthStore()
-const router = useRouter()
-const quasar = useQuasar()
-
-const model = reactive<LoginBody>({
-  email: '',
-  password: ''
-})
-
-const onSubmit = async () => {
-  quasar.loading.show()
-  setTimeout(async () => {
-    try {
-      if (model.email && model.password) {
-        await authStore.login(model)
-        if (authStore.tokens) {
-          await router.push('/')
-        } else {
-          throw Error
-        }
-      }
-    } catch (e) {
-      console.error('Login failed', e)
-      quasar.notify({
-        type: 'negative',
-        message: 'Login failed'
-      })
-    } finally {
-      quasar.loading.hide()
-    }
-  }, 1000)
-}
-</script>
