@@ -21,7 +21,7 @@ const model = reactive<Partial<CreateTaskPayload>>({
   title: undefined,
   members: [],
 })
-let _status = $ref(status)
+let _status = $ref<Status | undefined>(status)
 let triggerStatusError = $ref(false)
 let team = $ref<Team>()
 
@@ -68,7 +68,7 @@ const createTask = async () => {
     emit('created')
     model.title = undefined
     model.members = []
-    _status = $(status)
+    _status = status
   }
   catch (e) {
     console.error('Error creating task', e)
