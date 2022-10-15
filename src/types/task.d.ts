@@ -19,5 +19,6 @@ export interface Task extends Document {
 
 export interface CreateTaskPayload {
   title: Task['title'];
-  members?: string[];
+  creator: Task['creator']['id'];
+  members?: Task['members'][0]['id'][];
 }

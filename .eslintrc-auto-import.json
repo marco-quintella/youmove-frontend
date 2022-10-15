@@ -95,6 +95,7 @@
     "stores": true,
     "syncRef": true,
     "syncRefs": true,
+    "taskService": true,
     "teamService": true,
     "templateRef": true,
     "throttledRef": true,

@@ -15,11 +15,13 @@ const emit = defineEmits<{
 const quasar = useQuasar()
 const appStore = useAppStore()
 
+const activeMember = $computed(() => appStore.activeMember)
+
 const model = reactive<Partial<CreateTaskPayload>>({
   title: undefined,
   members: [],
 })
-const _status = $ref(status)
+let _status = $ref(status)
 let triggerStatusError = $ref(false)
 let team = $ref<Team>()
 
@@ -55,8 +57,18 @@ const createTask = async () => {
 
   quasar.loading.show()
   try {
-    await TaskService.create({ title: model.title }, _status.id)
+    if (!activeMember)
+      throw new Error('No active member found')
+
+    await TaskService.create({
+      title: model.title,
+      creator: activeMember.id,
+      members: model.members,
+    }, _status.id)
     emit('created')
+    model.title = undefined
+    model.members = []
+    _status = $(status)
   }
   catch (e) {
     console.error('Error creating task', e)

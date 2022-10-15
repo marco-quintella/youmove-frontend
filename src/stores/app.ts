@@ -1,28 +1,42 @@
 import { defineStore } from 'pinia'
-import { Ref, ref } from 'vue'
 import ProjectService from '../services/project.service'
 import type { Project, Team } from '../types'
 
 export const useAppStore = defineStore('app', () => {
   const route = useRoute()
+  const authStore = useAuthStore()
 
-  const globalLoading = ref(false)
-  const isDrawerOpen = ref(false)
-  const teams = ref<Team[]>([])
-  const projects = ref<Project[]>([])
+  let globalLoading = $ref(false)
+  let isDrawerOpen = $ref(false)
+  let teams = $ref<Team[]>([])
+  let projects = $ref<Project[]>([])
 
-  const activeCategory = computed(() => {
+  const activeCategory = $computed(() => {
     if (!route.params.categoryId)
       return null
-    return projects.value.find(project => project.categories.find(category => category.id === route.params.categoryId))
+    return projects.find(project => project.categories.find(category => category.id === route.params.categoryId))
+  })
+
+  const activeTeam = $computed(() => {
+    if (!activeCategory)
+      return null
+
+    return teams.find(team => team.id === activeCategory.team.id)
+  })
+
+  const activeMember = $computed(() => {
+    if (!activeTeam)
+      return null
+
+    return activeTeam.members.find(member => member.user.id === authStore.user?.id)
   })
 
   function setGlobalLoading(value: boolean) {
-    globalLoading.value = value
+    globalLoading = value
   }
 
   function setDrawerOpen(value: boolean) {
-    isDrawerOpen.value = value
+    isDrawerOpen = value
   }
 
   async function getUserTeams() {
@@ -36,7 +50,7 @@ export const useAppStore = defineStore('app', () => {
           result.push(...newTeams.data.results)
         }
       }
-      teams.value = result
+      teams = result
     }
     catch (error) {
       console.error(error)
@@ -54,14 +68,16 @@ export const useAppStore = defineStore('app', () => {
           result.push(...newProjects.data.results)
         }
       }
-      projects.value = result
+      projects = result
     }
     catch (error) {
       console.error(error)
     }
   }
 
-  return {
+  return $$({
+    activeMember,
+    activeTeam,
     activeCategory,
     globalLoading,
     isDrawerOpen,
@@ -71,5 +87,5 @@ export const useAppStore = defineStore('app', () => {
     setDrawerOpen,
     getUserTeams,
     getUserProjects,
-  }
+  })
 })

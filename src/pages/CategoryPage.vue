@@ -69,10 +69,10 @@ q-page
               q-btn.q-ml-sm(flat dense) + New Task
 
           .col-auto Show Closed
-        create-task-form.q-my-sm(:statuses="statuses")
+        create-task-form.q-my-sm(:statuses="statuses" @created="onNewStatusCreated")
         .row
           .col
-            create-status-separator-btn(v-if="statusesNumber === 0" :category-id="categoryId" @created="onNewStatusCreated")
+            create-status-separator-btn(v-if="statusesNumber === 0" :category-id="categoryId")
         .row
           template(v-for="status in statuses" :key="status.id")
             .col

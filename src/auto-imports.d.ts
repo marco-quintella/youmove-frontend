@@ -96,6 +96,7 @@ declare global {
   const stores: typeof import('./stores/index')['default']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
+  const taskService: typeof import('./services/task.service')['default']
   const teamService: typeof import('./services/team.service')['default']
   const templateRef: typeof import('@vueuse/core')['templateRef']
   const throttledRef: typeof import('@vueuse/core')['throttledRef']
@@ -387,6 +388,7 @@ declare module '@vue/runtime-core' {
     readonly stores: UnwrapRef<typeof import('./stores/index')['default']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
+    readonly taskService: UnwrapRef<typeof import('./services/task.service')['default']>
     readonly teamService: UnwrapRef<typeof import('./services/team.service')['default']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
